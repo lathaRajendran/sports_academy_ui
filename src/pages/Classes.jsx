@@ -1,3 +1,4 @@
+import API_BASE_URL from '../config';
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../App'
@@ -24,7 +25,7 @@ const Classes = () => {
   const navigate = useNavigate()
 
   const fetchClasses = () => {
-    fetch('http://localhost:8345/classes/', {
+    fetch(`${API_BASE_URL}/classes/`, {
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')}`
       }
@@ -41,7 +42,7 @@ const Classes = () => {
   }
 
   const fetchCoaches = () => {
-    fetch('http://localhost:8345/coaches/', {
+    fetch(`${API_BASE_URL}/coaches/`, {
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')}`
       }
@@ -64,7 +65,7 @@ const Classes = () => {
       coach_id: formData.coach_id || null
     }
 
-    fetch('http://localhost:8345/classes/', {
+    fetch(`${API_BASE_URL}/classes/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -84,7 +85,7 @@ const Classes = () => {
   const handleDeleteClass = (classId) => {
     if (!window.confirm("Are you sure you want to delete this class? This will also cancel all enrollments for this class.")) return;
     
-    fetch(`http://localhost:8345/classes/${classId}`, {
+    fetch(`${API_BASE_URL}/classes/${classId}`, {
       method: 'DELETE',
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')}`

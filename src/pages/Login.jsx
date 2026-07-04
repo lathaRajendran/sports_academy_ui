@@ -1,3 +1,4 @@
+import API_BASE_URL from '../config';
 import React, { useState } from 'react'
 
 const Login = ({ onLogin }) => {
@@ -13,7 +14,7 @@ const Login = ({ onLogin }) => {
     formData.append('username', email)
     formData.append('password', password)
 
-    fetch('http://localhost:8345/auth/token', {
+    fetch(`${API_BASE_URL}/auth/token`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'

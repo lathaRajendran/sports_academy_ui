@@ -1,3 +1,4 @@
+import API_BASE_URL from '../config';
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../App'
@@ -28,10 +29,10 @@ const Players = () => {
 
   const fetchPlayers = () => {
     Promise.all([
-      fetch('http://localhost:8345/players/', {
+      fetch(`${API_BASE_URL}/players/`, {
         headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
       }).then(res => res.json()),
-      fetch('http://localhost:8345/classes/', {
+      fetch(`${API_BASE_URL}/classes/`, {
         headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
       }).then(res => res.json())
     ])
@@ -50,7 +51,7 @@ const Players = () => {
     fetchPlayers()
     
     // Fetch classes for the registration modal
-    fetch('http://localhost:8345/classes/', {
+    fetch(`${API_BASE_URL}/classes/`, {
       headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
     })
       .then(res => res.json())
@@ -77,7 +78,7 @@ const Players = () => {
       initial_payment: parseFloat(formData.initial_payment)
     }
 
-    fetch('http://localhost:8345/players/register', {
+    fetch(`${API_BASE_URL}/players/register`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -107,7 +108,7 @@ const Players = () => {
     e.stopPropagation();
     if (!window.confirm("Are you sure you want to delete this player? This will cancel their enrollments and disable their login.")) return;
     
-    fetch(`http://localhost:8345/players/${playerId}`, {
+    fetch(`${API_BASE_URL}/players/${playerId}`, {
       method: 'DELETE',
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')}`

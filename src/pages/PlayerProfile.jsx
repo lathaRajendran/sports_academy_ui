@@ -1,3 +1,4 @@
+import API_BASE_URL from '../config';
 import React, { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { ArrowLeft, User, CreditCard, Calendar, Activity } from 'lucide-react'
@@ -23,7 +24,7 @@ const PlayerProfile = () => {
   const [editFormData, setEditFormData] = useState({})
 
   const fetchPlayerData = () => {
-    fetch(`http://localhost:8345/players/${id}`, {
+    fetch(`${API_BASE_URL}/players/${id}`, {
       headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
     })
       .then(res => res.json())
@@ -41,14 +42,14 @@ const PlayerProfile = () => {
       })
       .catch(err => console.error(err))
 
-    fetch(`http://localhost:8345/classes/player/${id}/enrollments`, {
+    fetch(`${API_BASE_URL}/classes/player/${id}/enrollments`, {
       headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
     })
       .then(res => res.json())
       .then(data => setEnrollments(data))
       .catch(err => console.error(err))
 
-    fetch(`http://localhost:8345/transactions/player/${id}`, {
+    fetch(`${API_BASE_URL}/transactions/player/${id}`, {
       headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
     })
       .then(res => res.json())
@@ -60,7 +61,7 @@ const PlayerProfile = () => {
     fetchPlayerData()
 
     // Fetch all classes for dropdown
-    fetch('http://localhost:8345/classes/', {
+    fetch(`${API_BASE_URL}/classes/`, {
       headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
     })
       .then(res => res.json())
@@ -75,7 +76,7 @@ const PlayerProfile = () => {
   }, [id])
 
   const handleUpdateEnrollment = (enrollmentId, updates) => {
-    fetch(`http://localhost:8345/classes/enrollments/${enrollmentId}`, {
+    fetch(`${API_BASE_URL}/classes/enrollments/${enrollmentId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -96,7 +97,7 @@ const PlayerProfile = () => {
     if (!selectedClassId) return
     setEnrollError('')
 
-    fetch('http://localhost:8345/classes/enrollments/', {
+    fetch(`${API_BASE_URL}/classes/enrollments/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -124,7 +125,7 @@ const PlayerProfile = () => {
     e.preventDefault()
     if (!topUpAmount || parseFloat(topUpAmount) <= 0) return
 
-    fetch('http://localhost:8345/transactions/', {
+    fetch(`${API_BASE_URL}/transactions/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -152,7 +153,7 @@ const PlayerProfile = () => {
   }
 
   const handleSendReminder = () => {
-    fetch(`http://localhost:8345/players/${id}/reminders`, {
+    fetch(`${API_BASE_URL}/players/${id}/reminders`, {
       method: 'POST',
       headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
     })
@@ -170,7 +171,7 @@ const PlayerProfile = () => {
       age: editFormData.age ? parseInt(editFormData.age, 10) : null
     }
 
-    fetch(`http://localhost:8345/players/${id}`, {
+    fetch(`${API_BASE_URL}/players/${id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',

@@ -1,3 +1,4 @@
+import API_BASE_URL from '../config';
 import React, { useState, useEffect } from 'react'
 import { UserPlus, Mail, Phone, Award } from 'lucide-react'
 
@@ -16,7 +17,7 @@ const Coaches = () => {
   })
 
   const fetchCoaches = () => {
-    fetch('http://localhost:8345/coaches/', {
+    fetch(`${API_BASE_URL}/coaches/`, {
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')}`
       }
@@ -38,7 +39,7 @@ const Coaches = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    fetch('http://localhost:8345/coaches/', {
+    fetch(`${API_BASE_URL}/coaches/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

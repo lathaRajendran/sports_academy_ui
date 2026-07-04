@@ -1,3 +1,4 @@
+import API_BASE_URL from '../config';
 import React, { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { ArrowLeft, User } from 'lucide-react'
@@ -23,7 +24,7 @@ const EditProfile = () => {
   const [success, setSuccess] = useState('')
 
   useEffect(() => {
-    fetch(`http://localhost:8345/players/${id}`, {
+    fetch(`${API_BASE_URL}/players/${id}`, {
       headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
     })
       .then(res => {
@@ -60,7 +61,7 @@ const EditProfile = () => {
       age: formData.age ? parseInt(formData.age, 10) : null
     }
 
-    fetch(`http://localhost:8345/players/${id}`, {
+    fetch(`${API_BASE_URL}/players/${id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',

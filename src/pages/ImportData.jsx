@@ -1,3 +1,4 @@
+import API_BASE_URL from '../config';
 import React, { useState, useCallback } from 'react'
 import { UploadCloud } from 'lucide-react'
 
@@ -23,7 +24,7 @@ const ImportData = () => {
     formData.append('file', file)
 
     try {
-      const response = await fetch('http://localhost:8345/import/', {
+      const response = await fetch(`${API_BASE_URL}/import/`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`

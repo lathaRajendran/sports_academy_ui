@@ -1,3 +1,4 @@
+import API_BASE_URL from '../config';
 import React, { useState, useEffect } from 'react'
 import { useAuth } from '../App'
 import PlayerDashboard from './PlayerDashboard'
@@ -14,7 +15,7 @@ const Dashboard = () => {
       return
     }
 
-    fetch('http://localhost:8345/dashboard/metrics', {
+    fetch(`${API_BASE_URL}/dashboard/metrics`, {
       headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
     })
       .then(res => res.json())

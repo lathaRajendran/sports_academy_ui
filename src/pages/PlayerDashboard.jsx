@@ -1,3 +1,4 @@
+import API_BASE_URL from '../config';
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { User, Activity, Map, ArrowRight } from 'lucide-react'
@@ -15,7 +16,7 @@ const PlayerDashboard = ({ playerId }) => {
         const headers = { 'Authorization': `Bearer ${token}` }
         
         // Fetch player details
-        const playerRes = await fetch(`http://localhost:8345/players/${playerId}`, { headers })
+        const playerRes = await fetch(`${API_BASE_URL}/players/${playerId}`, { headers })
         if (playerRes.ok) {
           const playerData = await playerRes.json()
           setPlayer(playerData)
@@ -24,7 +25,7 @@ const PlayerDashboard = ({ playerId }) => {
         }
 
         // Fetch player attendance
-        const attendanceRes = await fetch(`http://localhost:8345/attendance/player/${playerId}`, { headers })
+        const attendanceRes = await fetch(`${API_BASE_URL}/attendance/player/${playerId}`, { headers })
         const attendanceData = await attendanceRes.json()
         if (attendanceRes.ok) {
           setAttendances(attendanceData)
@@ -33,7 +34,7 @@ const PlayerDashboard = ({ playerId }) => {
         }
 
         // Fetch all classes to map class_id to name
-        const classesRes = await fetch(`http://localhost:8345/classes/`, { headers })
+        const classesRes = await fetch(`${API_BASE_URL}/classes/`, { headers })
         const classesData = await classesRes.json()
         if (classesRes.ok) {
           const classMap = {}

@@ -1,3 +1,4 @@
+import API_BASE_URL from '../config';
 import React, { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { ArrowLeft, Users, Calendar, MapPin, Clock } from 'lucide-react'
@@ -23,20 +24,20 @@ const ClassDetails = () => {
 
   useEffect(() => {
     const promises = [
-      fetch(`http://localhost:8345/classes/${id}`, {
+      fetch(`${API_BASE_URL}/classes/${id}`, {
         headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
       }).then(res => res.json())
     ]
     
     if (isAdmin) {
       promises.push(
-        fetch(`http://localhost:8345/classes/${id}/roster`, {
+        fetch(`${API_BASE_URL}/classes/${id}/roster`, {
           headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
         }).then(res => res.json())
       )
     } else if (isStudent && user?.player_id) {
       promises.push(
-        fetch(`http://localhost:8345/classes/player/${user.player_id}/enrollments`, {
+        fetch(`${API_BASE_URL}/classes/player/${user.player_id}/enrollments`, {
           headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
         }).then(res => res.json())
       )
@@ -76,7 +77,7 @@ const ClassDetails = () => {
   const markAttendance = (playerId) => {
     setMarkingStatus(prev => ({ ...prev, [playerId]: 'saving' }))
     
-    fetch('http://localhost:8345/attendance/', {
+    fetch(`${API_BASE_URL}/attendance/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -104,7 +105,7 @@ const ClassDetails = () => {
   }
 
   const handleUpdateEnrollment = (enrollmentId, updates) => {
-    fetch(`http://localhost:8345/classes/enrollments/${enrollmentId}`, {
+    fetch(`${API_BASE_URL}/classes/enrollments/${enrollmentId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -122,7 +123,7 @@ const ClassDetails = () => {
 
   const handleEnroll = () => {
     setEnrollError('')
-    fetch('http://localhost:8345/classes/enrollments/', {
+    fetch(`${API_BASE_URL}/classes/enrollments/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
